@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Courses</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .course-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .course-content {
+            padding: 15px;
+        }
+
+        .course-content h3 {
+            margin: 0 0 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background: #0056d2;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background: #003f9e;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Available Courses</h1>
+
+    <div class="course-grid">
+        {% for course in courses %}
+        <div class="course-card">
+            <img src="{{ course.image_url }}" alt="Course Image">
+            <div class="course-content">
+                <h3>{{ course.title }}</h3>
+                <p>{{ course.description }}</p>
+                <a href="#" class="btn">Enroll Now</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+-- USERS TABLE (Admin)
+-- USERS TABLE (Admin)
+-- USERS TABLE (Admin)
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    login_id VARCHAR(100) UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);-- COURSES TABLE
+CREATE TABLE courses (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    description TEXT NOT NULL,
+    image_url TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
