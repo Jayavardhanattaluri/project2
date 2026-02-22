@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
-import psycopg
-from psycopg.rows import dict_row
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
@@ -14,14 +14,14 @@ bcrypt = Bcrypt(app)
 # Returns None if the database is unavailable so routes can gracefully fallback.
 def get_db_connection():
     try:
-        conn = psycopg.connect(
+        conn = psycopg2.connect(
             host="localhost",
             database="tution_db",
             user="postgres",
-            password="123456789",
+            password="ABCD!@#$",
         )
         return conn
-    except psycopg.Error:
+    except psycopg2.Error:
         return None
 
 
@@ -139,7 +139,7 @@ def login():
             flash("Login service is temporarily unavailable. Please try again later.", "danger")
             return redirect(url_for("login"))
 
-        cur = conn.cursor(row_factory=dict_row)
+        cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT * FROM users WHERE username = %s", (username,))
         user = cur.fetchone()
         cur.close()
@@ -185,7 +185,7 @@ def register():
                 (username, hashed_password),
             )
             conn.commit()
-        except psycopg.Error:
+        except psycopg2.Error:
             conn.rollback()
             flash("Could not create account. The username may already exist.", "danger")
             return redirect(url_for("register"))
@@ -206,7 +206,7 @@ def courses():
     conn = get_db_connection()
 
     if conn is not None:
-        cur = conn.cursor(row_factory=dict_row)
+        cur = conn.cursor(cursor_factory=RealDictCursor)
         try:
             cur.execute(
                 """
@@ -216,7 +216,7 @@ def courses():
                 """
             )
             courses_data = [dict(row) for row in cur.fetchall()]
-        except psycopg.Error:
+        except psycopg2.Error:
             courses_data = []
         finally:
             cur.close()

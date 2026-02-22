@@ -10,5 +10,6 @@
             "database": "tution_db",
             "username": "postgres"
         }
-    ]
+    ],
+    "python-envs.pythonProjects": []
 }
