@@ -1,77 +1,237 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Courses</title>
     <style>
-        body {
-            font-family: Arial;
-            background-color: #f5f5f5;
+        :root {
+            --primary: #0056d2;
+            --primary-dark: #003f9e;
+            --text: #1f1f1f;
+            --muted: #6c6f73;
+            --surface: #ffffff;
+            --bg: #f7f9fc;
+            --chip: #eef3ff;
+            --border: #e4e8f1;
         }
 
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .topbar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 22px;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .topbar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand {
+            color: var(--primary);
+            font-weight: 800;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .actions a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 16px;
+        }
+
+        .actions a:hover { color: var(--text); }
+
         .container {
-            width: 90%;
-            margin: auto;
+            width: min(1200px, 92%);
+            margin: 32px auto 50px;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .hero p {
+            color: var(--muted);
+            margin: 10px 0 0;
+            max-width: 760px;
+        }
+
+        .tabs {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .chip {
+            background: var(--chip);
+            color: var(--primary);
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
         }
 
         .course-grid {
+            margin-top: 26px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
         }
 
         .course-card {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
             overflow: hidden;
+            box-shadow: 0 5px 18px rgba(17, 24, 39, 0.06);
+            display: flex;
+            flex-direction: column;
         }
 
         .course-card img {
             width: 100%;
-            height: 180px;
+            height: 175px;
             object-fit: cover;
+            display: block;
         }
 
         .course-content {
-            padding: 15px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .course-content h3 {
+            margin: 0 0 7px;
+            font-size: 1.05rem;
+            line-height: 1.35;
+        }
+
+        .meta {
+            color: var(--muted);
+            font-size: 0.87rem;
+            margin-bottom: 10px;
+        }
+
+        .desc {
+            color: #2f3238;
+            font-size: 0.92rem;
+            line-height: 1.4;
             margin: 0 0 10px;
+            min-height: 56px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            font-size: 0.84rem;
+            color: #4a4d55;
+        }
+
+        .rating {
+            color: #b4690e;
+            font-weight: 700;
+        }
+
+        .footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category {
+            background: #f0f2f7;
+            color: #3d4150;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
         }
 
         .btn {
             display: inline-block;
-            padding: 8px 15px;
-            background: #0056d2;
+            padding: 8px 14px;
+            background: var(--primary);
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.86rem;
         }
 
-        .btn:hover {
-            background: #003f9e;
-        }
+        .btn:hover { background: var(--primary-dark); }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>Available Courses</h1>
-
-    <div class="course-grid">
-        {% for course in courses %}
-        <div class="course-card">
-            <img src="{{ course.image_url }}" alt="Course Image">
-            <div class="course-content">
-                <h3>{{ course.title }}</h3>
-                <p>{{ course.description }}</p>
-                <a href="#" class="btn">Enroll Now</a>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <a href="{{ url_for('index') }}" class="brand">Tution Courses</a>
+            <div class="actions">
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Sign Up</a>
             </div>
         </div>
-        {% endfor %}
     </div>
-</div>
 
+    <div class="container">
+        <div class="hero">
+            <h1>Professional Certificates & Courses</h1>
+            <p>Discover in-demand courses from top instructors. Compare ratings, skill levels, and learning duration to choose your next learning path.</p>
+            <div class="tabs">
+                <span class="chip">Popular</span>
+                <span class="chip">Computer Science</span>
+                <span class="chip">Data Science</span>
+                <span class="chip">Programming</span>
+            </div>
+        </div>
+
+        <div class="course-grid">
+            {% for course in courses %}
+            <div class="course-card">
+                <img src="{{ course.image_url }}" alt="{{ course.title }}" />
+                <div class="course-content">
+                    <h3>{{ course.title }}</h3>
+                    <div class="meta">By {{ course.instructor or 'Expert Instructor' }}</div>
+                    <p class="desc">{{ course.description }}</p>
+                    <div class="stats">
+                        <span class="rating">★ {{ course.rating or '4.7' }}</span>
+                        <span>{{ course.students or '10,000+' }} learners</span>
+                        <span>{{ course.duration or '20 hours' }}</span>
+                        <span>{{ course.level or 'All Levels' }}</span>
+                    </div>
+                    <div class="footer">
+                        <span class="category">{{ course.category or 'General' }}</span>
+                        <a href="#" class="btn">Enroll</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>

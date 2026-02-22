@@ -1,14 +1,10 @@
-# db.py
-import psycopg2
+import psycopg
+
 
 def get_db_connection():
-    conn = psycopg2.connect(
+    return psycopg.connect(
         host="localhost",
         database="tution_db",
         user="postgres",
-        password="ABCD!@#$" \
-        ""
+        password="123456789",
     )
-    return conn
-
-
